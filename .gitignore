@@ -1,0 +1,4 @@
+*.gz
+cifar-100-python
+stl10_binary
+*.pth 
