@@ -1,54 +1,64 @@
 #!/bin/bash
 
 # ======================================================
-# STL-10 Contrastive / Semi-Supervised Training Script
-# (ResNet-18 + Projection Head)
+# Full CIFAR-100 Semi-Supervised Contrastive Pipeline
 # ======================================================
-export CUDA_VISIBLE_DEVICES=1
 
 set -e
 
 echo "======================================================"
-echo "START TRAINING ON STL-10"
+echo "START FULL SEMI-SUPERVISED PIPELINE (CIFAR-100)"
 echo "======================================================"
 
 # ------------------------------------------------------
-# 1. Baseline
+# Step 1: Training (resume + early stopping supported)
 # ------------------------------------------------------
-echo "[1/5] Training: Baseline (CE)"
-python train.py --config config/baseline_stl10.yaml
+echo ""
+echo "[STEP 1] Training all experiments"
 echo "------------------------------------------------------"
 
-# ------------------------------------------------------
-# 2. Contrastive Loss (Hadsell et al. 2006)
-# ------------------------------------------------------
-echo "[2/5] Training: Contrastive Loss (2006)"
-python train.py --config config/contrastive_2006_stl10.yaml
-echo "------------------------------------------------------"
-
-# ------------------------------------------------------
-# 3. Triplet Loss
-# ------------------------------------------------------
-echo "[3/5] Training: Triplet Loss"
-python train.py --config config/triplet_stl10.yaml
-echo "------------------------------------------------------"
-
-# ------------------------------------------------------
-# 4. InfoNCE
-# ------------------------------------------------------
-echo "[4/5] Training: InfoNCE Loss"
-python train.py --config config/info_nce_stl10.yaml
-echo "------------------------------------------------------"
-
-# ------------------------------------------------------
-# 5. Align + Uniform
-# ------------------------------------------------------
-echo "[5/5] Training: Align + Uniform Loss"
-python train.py --config config/align_uniform_stl10.yaml
-echo "------------------------------------------------------"
-
+# bash train.sh
 
 echo ""
+echo "[STEP 1] Training finished."
+echo ""
+
+# ------------------------------------------------------
+# Step 2: Evaluation (best checkpoint)
+# ------------------------------------------------------
+echo "[STEP 2] Evaluating best checkpoints"
+echo "------------------------------------------------------"
+
+bash eval.sh
+
+echo ""
+echo "[STEP 2] Evaluation finished."
+echo ""
+
+# ------------------------------------------------------
+# Step 3: t-SNE Visualization (representation quality)
+# ------------------------------------------------------
+echo "[STEP 3] Generating t-SNE figures"
+echo "------------------------------------------------------"
+
+python tsne.py
+
+echo ""
+echo "[STEP 3] t-SNE generation finished."
+echo ""
+
+# ------------------------------------------------------
+# Step 4: Comparison plots (accuracy / geometry)
+# ------------------------------------------------------
+echo "[STEP 4] Generating comparison plots"
+echo "------------------------------------------------------"
+
+python comparation.py
+
+echo ""
+echo "[STEP 4] Comparison plots finished."
+echo ""
+
 echo "======================================================"
-echo "ALL STL-10 TRAINING PROCESSES FINISHED"
+echo "PIPELINE COMPLETED SUCCESSFULLY"
 echo "======================================================"
