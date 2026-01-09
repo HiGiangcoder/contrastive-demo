@@ -25,12 +25,6 @@ class SmallCNN(nn.Module):
             nn.BatchNorm2d(256),
             nn.ReLU(),
             nn.MaxPool2d(2, 2), # Thêm MaxPool: 24->12 (STL10) hoặc 8->4 (CIFAR)
-            
-            # Thêm Block 4 (Optional - nếu dùng STL10 nên thêm để giảm sâu hơn)
-            # nn.Conv2d(256, 256, 3, stride=1, padding=1),
-            # nn.BatchNorm2d(256),
-            # nn.ReLU(),
-            # nn.MaxPool2d(2, 2), # 12->6
 
             nn.AdaptiveAvgPool2d(1) # Ép về 1x1 bất kể size
         )
