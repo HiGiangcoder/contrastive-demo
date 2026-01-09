@@ -1,0 +1,23 @@
+name: baseline_stl10
+dataset: stl10
+num_workers: 4
+
+loss_type: baseline
+# Trọng số loss
+lambda_u: 1.0  # Unsupervised weight
+lambda_c: 0  # Contrastive weight
+
+# Model & Training
+backbone: smallcnn
+emb_dim: 128
+batch_size: 64
+epochs: 50
+lr: 0.001
+min_lr: 0.00001
+
+# Advanced Training
+warmup_epochs: 5      # Số epoch warmup
+ema_decay: 0.99      # Hệ số EMA
+pseudo_threshold: 0.7 # Ngưỡng giả nhãn
+patience: 15          # Early stopping patience
+resume: True         # Set True nếu muốn tự động tìm checkpoint

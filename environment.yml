@@ -1,0 +1,21 @@
+name: contrastive-demo
+channels:
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=11.8  # Hoặc 'cpuonly' nếu máy bạn không có GPU NVIDIA
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - tqdm
+  - pyyaml
+  - pip
+  - pip:
+      - jupyter
+      - notebook
